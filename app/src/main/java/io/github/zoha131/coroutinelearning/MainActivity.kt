@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //coroutine with concurrency
     suspend fun asyncTask(): Int = coroutineScope {
 
             Log.d("AsyncCoroutine", "Before calling")
@@ -33,6 +34,19 @@ class MainActivity : AppCompatActivity() {
             c
         }
 
+    //coroutine without concurrency
+    /*suspend fun asyncTask(): Int {
+
+        Log.d("AsyncCoroutine", "Before calling")
+        val a = logLater(5000)
+        val b =  logLater(5000)
+        Log.d("AsyncCoroutine", "After calling")
+
+        val c = a + b
+        Log.d("AsyncCoroutine", "Work completes here")
+
+        return c
+    }*/
 
     suspend fun logLater(millis: Long): Int {
 
