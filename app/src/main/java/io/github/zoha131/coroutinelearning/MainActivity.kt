@@ -3,10 +3,7 @@ package io.github.zoha131.coroutinelearning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,16 +14,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         GlobalScope.launch(Dispatchers.Main) {
+
+            Log.d("Coroutine", "Logging from coroutine. ${Thread.currentThread().name}")
+
             logLater(2000)
         }
     }
 
-
-
     suspend fun logLater(millis: Long){
-        Log.d("Coroutine", "Logging before suspend")
-        delay(millis)
-        Log.d("Coroutine", "Logging after suspend")
+
+        Log.d("Coroutine", "Logging outside of withcontext. ${Thread.currentThread().name}")
+
+        val result = withContext(Dispatchers.Default){
+
+            Log.d("Coroutine", "Logging before suspend. ${Thread.currentThread().name}")
+            delay(millis)
+            Log.d("Coroutine", "Logging after suspend. ${Thread.currentThread().name}")
+
+            9
+        }
     }
 
 
