@@ -19,12 +19,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            var value = 0
 
-            while (true){
-                delay(1000)
-                Log.d("LifecycleScope", "From first coroutine : ${++value}")
+            launch(handler) { //This handler won't have any effect
+                var value = 0
+
+                while (true){
+                    delay(1000)
+                    Log.d("LifecycleScope", "From second coroutine : ${++value}")
+                    errorTrial() // throw NumberFormatException("Exception Trial")
+                }
             }
+
+            lifecycleScope.launch(handler) { //This handler will handle exception
+                var value = 0
+
+                while (true){
+                    delay(1000)
+                    Log.d("LifecycleScope", "From second coroutine : ${++value}")
+                    errorTrial() // throw NumberFormatException("Exception Trial")
+                }
+            }
+
         }
 
         lifecycleScope.launch(handler) {
