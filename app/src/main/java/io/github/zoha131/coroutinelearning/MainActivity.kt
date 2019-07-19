@@ -3,7 +3,9 @@ package io.github.zoha131.coroutinelearning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
+import java.lang.NumberFormatException
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,12 +14,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch(Dispatchers.Main) {
-
-            Log.d("Coroutine", "Logging from coroutine. ${Thread.currentThread().name}")
-
-            asyncTask()
+        val handler = CoroutineExceptionHandler { context, throwable ->
+            Log.d("LifecycleScope", "$throwable")
         }
+
+        lifecycleScope.launch {
+            var value = 0
+
+            while (true){
+                delay(1000)
+                Log.d("LifecycleScope", "From first coroutine : ${++value}")
+            }
+        }
+
+        lifecycleScope.launch(handler) {
+            var value = 0
+
+            while (true){
+                delay(1000)
+                Log.d("LifecycleScope", "From second coroutine : ${++value}")
+                errorTrial() // throw NumberFormatException("Exception Trial")
+            }
+        }
+
+    }
+
+
+    suspend fun errorTrial(){
+        Log.d("LifecycleScope", "Before Throwing Exception")
+        delay(1000)
+        throw NumberFormatException("Exception Trial")
     }
 
     //coroutine with concurrency
