@@ -3,7 +3,7 @@ package io.github.zoha131.coroutinelearning
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val handler = CoroutineExceptionHandler { context, throwable ->
+       /* val handler = CoroutineExceptionHandler { context, throwable ->
             Log.d("LifecycleScope", "$throwable")
         }
 
@@ -41,8 +41,28 @@ class MainActivity : AppCompatActivity() {
                 Log.d("LifecycleScope", "From second coroutine : ${++value}")
                 errorTrial() // throw NumberFormatException("Exception Trial")
             }
+        }*/
+
+        lifecycleScope.launchWhenStarted {
+            //Any code in this block will be suspended if
+            //the lifecycle state less than Started
+            delay(2000)
+            Log.d("LifeCycleAware", "launchWhenStarted")
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.d("LifeCycleAware", "onStart")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.d("LifeCyclseAware", "onResume")
     }
 
 
