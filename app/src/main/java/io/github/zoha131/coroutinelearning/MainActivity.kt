@@ -8,55 +8,58 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
+    /* val handler = CoroutineExceptionHandler { context, throwable ->
+           Log.d("LifecycleScope", "$throwable")
+       }
+
+       lifecycleScope.launch {
+
+           val result: Deferred<Unit> = async {
+               delay(1000)
+               Log.d("LifecycleScope", "From second coroutine")
+               errorTrial() // throw NumberFormatException("Exception Trial")
+           }
+
+           try {
+               result.await()
+           } catch (throwable: NumberFormatException){
+               Log.d("LifecycleScope", "$throwable")
+           }
+
+       }
+
+       lifecycleScope.launch(handler) {
+           var value = 0
+
+           while (true) {
+               delay(1000)
+               Log.d("LifecycleScope", "From second coroutine : ${++value}")
+               errorTrial() // throw NumberFormatException("Exception Trial")
+           }
+       }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       /* val handler = CoroutineExceptionHandler { context, throwable ->
-            Log.d("LifecycleScope", "$throwable")
-        }
-
-        lifecycleScope.launch {
-
-            val result: Deferred<Unit> = async {
-                delay(1000)
-                Log.d("LifecycleScope", "From second coroutine")
-                errorTrial() // throw NumberFormatException("Exception Trial")
-            }
-
-            try {
-                result.await()
-            } catch (throwable: NumberFormatException){
-                Log.d("LifecycleScope", "$throwable")
-            }
-
-        }
-
-        lifecycleScope.launch(handler) {
-            var value = 0
-
-            while (true) {
-                delay(1000)
-                Log.d("LifecycleScope", "From second coroutine : ${++value}")
-                errorTrial() // throw NumberFormatException("Exception Trial")
-            }
-        }*/
-
         lifecycleScope.launchWhenStarted {
             //Any code in this block will be suspended if
             //the lifecycle state less than Started
-            delay(2000)
-            Log.d("LifeCycleAware", "launchWhenStarted")
+            while (true){
+                delay(2000)
+                Log.d("LifeCycleAware", "launchWhenStarted")
+            }
         }
-
     }
 
     override fun onStart() {
         super.onStart()
-
         Log.d("LifeCycleAware", "onStart")
+    }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("LifeCycleAware", "onStop")
     }
 
     override fun onResume() {
