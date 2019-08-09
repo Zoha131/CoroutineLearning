@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel(){
 
@@ -24,8 +25,10 @@ class MainViewModel : ViewModel(){
 
     val intLiveData = liveData(Dispatchers.IO, 20) {
         //getData is suspending function
-        val data = mainRepository.getData()
-        emit(data)
+        withContext(Dispatchers.IO){
+            val data = mainRepository.getData()
+            emit(data)
+        }
     }
 
 
