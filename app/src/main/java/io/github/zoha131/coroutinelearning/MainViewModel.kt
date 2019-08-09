@@ -34,6 +34,11 @@ class MainViewModel : ViewModel(){
         }
     }
 
+    val strLiveData = liveData {
+        val liveData = mainRepository.getStrLiveData()
+        emitSource(liveData)
+    }
+
 
 }
 
@@ -41,6 +46,11 @@ class MainRepository{
     suspend fun getData(): Int {
         delay(1000)
         return 6
+    }
+
+    suspend fun getStrLiveData():LiveData<String>{
+        delay(1000)
+        return MutableLiveData("LiveData")
     }
 }
 

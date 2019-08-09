@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             textView.text = "Value from liveData: $it"
         })
 
+        mainViewModel.strLiveData.observe(this, Observer {
+            strTextView.text = "Value from emitSource: $it"
+        })
+
     }
 
     override fun onStart() {
