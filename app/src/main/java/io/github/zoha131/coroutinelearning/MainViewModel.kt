@@ -8,7 +8,7 @@ class MainViewModel : ViewModel(){
 
     val mainRepository = MainRepository() // normally this would come from DI
 
-    private val _intLiveData = MutableLiveData<Int>()
+    /*private val _intLiveData = MutableLiveData<Int>()
     val intLiveData: LiveData<Int>
         get() = _intLiveData
 
@@ -19,6 +19,12 @@ class MainViewModel : ViewModel(){
             val data = mainRepository.getData()
             _intLiveData.value = data
         }
+    }*/
+
+    val intLiveData = liveData {
+        //getData is suspending function
+        val data = mainRepository.getData()
+        emit(data)
     }
 
 
