@@ -1,6 +1,7 @@
 package io.github.zoha131.coroutinelearning
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -21,7 +22,7 @@ class MainViewModel : ViewModel(){
         }
     }*/
 
-    val intLiveData = liveData {
+    val intLiveData = liveData(Dispatchers.IO, 20) {
         //getData is suspending function
         val data = mainRepository.getData()
         emit(data)

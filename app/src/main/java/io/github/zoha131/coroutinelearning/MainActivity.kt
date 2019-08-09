@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,13 +46,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        lifecycleScope.launchWhenStarted {
-            //Any code in this block will be suspended if
-            //the lifecycle state less than Started
-            Log.d("LifeCycleAware", "launchWhenStarted: before calling")
-            val result = differentDispatcher()
-            Log.d("LifeCycleAware", "launchWhenStarted: after calling $result")
-        }
+        mainViewModel.intLiveData.observe(this, Observer {
+            textView.text = "Value from liveData: $it"
+        })
+
     }
 
     override fun onStart() {
