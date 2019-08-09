@@ -46,11 +46,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainViewModel.intLiveData.observe(this, Observer {
+        mainViewModel.transEmitLiveData.observe(this, Observer {
             textView.text = "Value from liveData: $it"
         })
 
-        mainViewModel.strLiveData.observe(this, Observer {
+        mainViewModel.transEmitSourceLiveData.observe(this, Observer {
             strTextView.text = "Value from emitSource: $it"
         })
 
