@@ -2,6 +2,7 @@ package io.github.zoha131.coroutinelearning
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
                errorTrial() // throw NumberFormatException("Exception Trial")
            }
        }*/
+
+    val mainViewModel by viewModels<MainViewModel> ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
