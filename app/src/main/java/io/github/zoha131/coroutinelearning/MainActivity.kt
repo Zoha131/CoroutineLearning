@@ -45,10 +45,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             //Any code in this block will be suspended if
             //the lifecycle state less than Started
-            while (true){
-                delay(2000)
-                Log.d("LifeCycleAware", "launchWhenStarted")
-            }
+            Log.d("LifeCycleAware", "launchWhenStarted: before calling")
+            val result = differentDispatcher()
+            Log.d("LifeCycleAware", "launchWhenStarted: after calling $result")
         }
     }
 
@@ -62,12 +61,19 @@ class MainActivity : AppCompatActivity() {
         Log.d("LifeCycleAware", "onStop")
     }
 
+    suspend fun differentDispatcher(): Int = withContext(Dispatchers.Default){
+        for (i in 1..5){
+            delay(2000)
+            Log.d("LifeCycleAware", "inside Different Dispatcher")
+        }
+        return@withContext 9
+    }
+
     override fun onResume() {
         super.onResume()
 
-        Log.d("LifeCyclseAware", "onResume")
+        Log.d("LifeCycleAware", "onResume")
     }
-
 
     suspend fun errorTrial() {
         Log.d("LifecycleScope", "Before Throwing Exception")
