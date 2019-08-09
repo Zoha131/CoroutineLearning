@@ -23,15 +23,13 @@ class MainViewModel : ViewModel(){
         }
     }*/
 
-    val intLiveData = liveData(Dispatchers.IO, 20) {
-        //getData is suspending function
-        var data = 0
-        withContext(Dispatchers.IO){
-            while (true){
-                delay(1000)
-                emit(data++)
-            }
+    val intLiveData:LiveData<Int> = liveData {
+
+        if(latestValue == null){
+            delay(1000)
+            emit(mainRepository.getData())
         }
+
     }
 
     val strLiveData = liveData {
